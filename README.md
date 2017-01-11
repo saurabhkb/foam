@@ -8,6 +8,3 @@ Foam is an extremely basic text editor written in C++ using ncurses.
 #### To Do
 * save to file
 * ...
-
-#### Test
-Look at `tests/README.md`
