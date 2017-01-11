@@ -3,7 +3,7 @@
 #include "tmatrix.h"
 
 /*
-SMatrix is the matrix corresponding to the screen
+SMatrix is the character matrix corresponding to the screen
 */
 class SMatrix {
 private:

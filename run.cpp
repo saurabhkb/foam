@@ -7,6 +7,7 @@ const int KEY_NEWLINE = 13;
 
 #define CEIL(a, b) (((a) / (b)) + (((a) % (b)) > 0 ? 1 : 0))
 
+/* render the line with the string arr */
 int render_line(int pos, std::string arr) {
 	int i = 0;
 	char *start = &arr[0];
@@ -22,6 +23,8 @@ int render_line(int pos, std::string arr) {
 	return i > 0 ? i : 1;
 }
 
+/* main function which goes through the text matrix and decides what submatrix actually
+appears on the screen based on the screen dimensions */
 void render(SMatrix& smtx, TMatrix& tmtx) {
 	unsigned int i = 0, len;
 	unsigned int text_line_number = 0, num_screen_lines = 0;
@@ -42,10 +45,10 @@ void render(SMatrix& smtx, TMatrix& tmtx) {
 	}
 	smtx.screen_cursor_col = tmtx.logical_cursor_col % COLS;
 
-	/* increment the y_offset by the number of screen lines of the topmost line currently on the screen */
-	/* note that we must increment i by the number of screen lines each text line occupies (not simply by 1 each time) */
-
-	/* set y_offset as required */
+	/*
+	increment the y_offset by the number of screen lines of the topmost line currently on the screen
+	note that we must increment i by the number of screen lines each text line occupies (not simply by 1 each time)
+	set y_offset as required */
 	if((int) (smtx.screen_cursor_row - smtx.y_offset) >= LINES) {
 		smtx.y_offset += num_screen_lines;
 	}
@@ -56,9 +59,8 @@ void render(SMatrix& smtx, TMatrix& tmtx) {
 
 	/* start rendering */
 	i = 0;
-	for(unsigned int j = smtx.y_offset; j < tmtx.text.size(); j++) {
+	for(unsigned int j = smtx.y_offset; j < tmtx.text.size(); j++)
 		i += render_line(i, tmtx.text[j]);
-	}
 
 	/* move the cursor to the position calculated offset by the y_offset */
 	move(smtx.screen_cursor_row - smtx.y_offset, smtx.screen_cursor_col);
@@ -66,7 +68,7 @@ void render(SMatrix& smtx, TMatrix& tmtx) {
 	refresh();
 }
 
-
+/* loop which reads user input and calls render to show it on the screen */
 void run_loop(SMatrix& smtx, TMatrix& tmtx) {
 	unsigned int ch;
 
@@ -104,17 +106,17 @@ void run_loop(SMatrix& smtx, TMatrix& tmtx) {
 }
 
 int main() {
-	SMatrix matrix;
+	SMatrix smtx;
 	TMatrix tmtx;
 
-	initscr();	// initialize
-	keypad(stdscr, TRUE);	// extra keys
-	cbreak();
-	nonl();
-	noecho();
+	initscr();	/* initialize */
+	keypad(stdscr, TRUE);	/* extra keys */
+	cbreak();	/* no input buffering */
+	nonl();	/* better newline handling */
+	noecho();	/* prevent echo */
 
-	run_loop(matrix, tmtx);
+	run_loop(smtx, tmtx);
 
-	endwin();
+	endwin();	/* restore to pre-ncurses state */
 	return 0;
 }
