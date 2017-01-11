@@ -1,8 +1,10 @@
+CPP = g++
+CFLAGS = -Wall -g
 all:
-	gcc -c -Wall tmatrix.c
-	gcc -c -Wall smatrix.c
-	gcc -c -Wall run.c
-	gcc -Wall run.o tmatrix.o smatrix.o -lncurses
+	$(CPP) $(CFLAGS) -c tmatrix.cpp
+	$(CPP) $(CFLAGS) -c smatrix.cpp
+	$(CPP) $(CFLAGS) -c run.cpp
+	$(CPP) run.o tmatrix.o smatrix.o -lncurses
 
 clean:
 	rm -f a.out *.o

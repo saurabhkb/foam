@@ -2,16 +2,18 @@
 #define __SMATRIX
 #include "tmatrix.h"
 
-typedef struct {
-	int screen_cursor_row;
-	int screen_cursor_col;
-	int y_offset;
-} SMatrix;
-
-
-void render(SMatrix *, TMatrix *);
-int render_line(int, char *);
-void init_smatrix(SMatrix *);
-void destroy_smatrix(SMatrix *);
+/*
+SMatrix is the matrix corresponding to the screen
+*/
+class SMatrix {
+private:
+	unsigned int screen_cursor_row;
+	unsigned int screen_cursor_col;
+	unsigned int y_offset;	/* line number from top of screen */
+public:
+	SMatrix();
+	~SMatrix();
+	friend void render(SMatrix&, TMatrix&);
+};
 
 #endif
