@@ -60,17 +60,18 @@ void TMatrix::move_logical_cursor_up() {
 	}
 
 	/* if upper row has smaller length, move cursor to the end of that line */
-	if(text[logical_cursor_row].length() < logical_cursor_col) {
+	if(text[logical_cursor_row].length() < (unsigned int) logical_cursor_col) {
 		logical_cursor_col = text[logical_cursor_row].length();
 	}
 }
 
 void TMatrix::move_logical_cursor_down() {
-	if(logical_cursor_row < text.size()) {
+	if(logical_cursor_row < 0 || logical_cursor_col < 0) return;
+	if((unsigned int) logical_cursor_row < text.size() - 1) {
 		logical_cursor_row++;
 	}
 
-	if(text[logical_cursor_row].length() < logical_cursor_col)
+	if(text[logical_cursor_row].length() < (unsigned int) logical_cursor_col)
 		logical_cursor_col = text[logical_cursor_row].length();
 }
 
@@ -80,6 +81,8 @@ void TMatrix::move_logical_cursor_left() {
 }
 
 void TMatrix::move_logical_cursor_right() {
-	if(logical_cursor_col < text[logical_cursor_row].length())
+	if(logical_cursor_row < 0 || logical_cursor_col < 0) return;
+
+	if((unsigned int) logical_cursor_col < text[logical_cursor_row].length())
 		logical_cursor_col++;
 }

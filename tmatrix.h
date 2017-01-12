@@ -22,8 +22,8 @@ TMatrix is the character matrix corresponding to the actual text. SMatrix contai
 class TMatrix {
 private:
 	std::vector<std::string> text;
-	unsigned int logical_cursor_row;
-	unsigned int logical_cursor_col;
+	int logical_cursor_row;
+	int logical_cursor_col;
 public:
 	TMatrix();
 	void insert_ch(const char);
